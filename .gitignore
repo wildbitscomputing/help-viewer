@@ -1,3 +1,5 @@
+.DS_Store
+
 /bin
 /src/superbasic_keywords_1.h
 /src/superbasic_keywords_2.h
