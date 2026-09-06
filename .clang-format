@@ -1,0 +1,19 @@
+BasedOnStyle: WebKit
+IndentWidth: 4
+ColumnLimit: 0
+AlignOperands: true
+AlignArrayOfStructures: Right
+AlignAfterOpenBracket: true
+AlignConsecutiveMacros:
+  Enabled: true
+  AcrossEmptyLines: true
+  AcrossComments: true
+AlignConsecutiveAssignments: AcrossEmptyLines
+AlignConsecutiveBitFields: AcrossEmptyLines
+AlignConsecutiveDeclarations: AcrossEmptyLines
+AlignTrailingComments: Always
+BreakBeforeBinaryOperators: None
+BreakBeforeBraces: Custom
+BraceWrapping:
+  BeforeWhile: true
+AllowShortBlocksOnASingleLine: false
