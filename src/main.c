@@ -27,8 +27,11 @@
 #define TEXT_COLOR                    COLOR(COLOR_LIGHT_GREY, COLOR_DARK_BLUE)
 #define HEADER_COLOR                  COLOR(COLOR_DARK_BLUE, COLOR_LIGHT_GREY)
 #define HIGHLIGHT_COLOR               COLOR(COLOR_DARK_BLUE, COLOR_LIGHT_GREY)
+#define SHORTCUT_COLOR                COLOR(COLOR_LIGHT_BLUE, COLOR_DARK_BLUE)
+#define CHAPTER_COLOR                 COLOR(COLOR_WHITE, COLOR_DARK_BLUE)
 #define KEYWORD_COLOR                 COLOR(COLOR_ORANGE, COLOR_DARK_BLUE)
 #define KEYWORD_HIGHLIGHT_COLOR       COLOR(COLOR_DARK_BLUE, COLOR_ORANGE)
+#define CMD_COLOR                     COLOR(COLOR_LIGHT_PURPLE, COLOR_DARK_BLUE)
 
 // types
 typedef struct {
@@ -324,7 +327,6 @@ void draw_menu(void) {
     clear();
     title("Foenix Documentation");
     at(0, 2);
-    color(TEXT_COLOR);
 
     document_count = 0;
     for (index0 = FLASH_SECTOR_START;
@@ -340,8 +342,10 @@ void draw_menu(void) {
                 all_doc_links[document_count].index   = it - current_pack->start_doc;
 
                 puts("    ");
-                putc(document_count + 'A');
+                color(SHORTCUT_COLOR);
+                putc(document_count + 'a');
                 puts(")  ");
+                color(CHAPTER_COLOR);
                 puts(it->title);
                 newline();
 
@@ -364,17 +368,23 @@ void draw_menu(void) {
 
     if (has_superbasic_reference) {
         newline();
-        puts("    X)  SuperBASIC Reference");
+        color(SHORTCUT_COLOR);
+        puts("    x)");
+        color(CHAPTER_COLOR);
+        puts("  SuperBASIC Reference");
     }
 
     newline();
     newline();
 
+    color(SHORTCUT_COLOR);
     if (get_machine_id() == MACHINE_F256_JR) {
-        puts("  Esc)  Quit");
+        puts("  Esc)");
     } else {
-        puts(" STOP)  Quit");
+        puts(" STOP)");
     }
+    color(CMD_COLOR);
+    puts("  Quit");
 }
 
 void menu(void) {
