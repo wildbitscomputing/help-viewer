@@ -195,7 +195,7 @@ initialize:
 
 
     ; Clear screen
-    lda     #$10
+    lda     #$92                    ; light grey foreground, dark blue background
     sta     text_color
     jsr     _clear
 
@@ -566,10 +566,23 @@ output_char:
     .segment "RODATA"
 
 text_palette:
-    ; Color b    g    r    a
-    .byte   $79, $51, $00, $00
-    .byte   $f9, $f0, $e0, $00
-    .byte   $ff, $ff, $ff, $00
+    ; standard SuperBASIC text palette, in BGRA byte order
+    .byte   $00, $00, $00, $00     ;  0 black
+    .byte   $66, $66, $66, $00     ;  1 grey
+    .byte   $aa, $00, $00, $00     ;  2 dark blue
+    .byte   $00, $aa, $00, $00     ;  3 green
+    .byte   $ea, $41, $c0, $00     ;  4 purple
+    .byte   $00, $48, $87, $00     ;  5 brown
+    .byte   $00, $9c, $ff, $00     ;  6 orange
+    .byte   $ff, $db, $57, $00     ;  7 light blue
+    .byte   $28, $3f, $3f, $00     ;  8 dark grey
+    .byte   $8a, $aa, $aa, $00     ;  9 light grey
+    .byte   $ff, $55, $55, $00     ; 10 blue
+    .byte   $55, $ff, $55, $00     ; 11 light green
+    .byte   $ed, $8d, $ff, $00     ; 12 light purple
+    .byte   $00, $00, $ff, $00     ; 13 red
+    .byte   $55, $ff, $ff, $00     ; 14 yellow
+    .byte   $ff, $ff, $ff, $00     ; 15 white
 text_palette_len    = *-text_palette
 
 row_start_low:

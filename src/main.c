@@ -3,9 +3,32 @@
 
 #include <string.h>
 
-#define DOC_LINK_COUNT 25
-#define REF_COLUMN     29
-#define KEYWORD_SLOTS  2
+#define DOC_LINK_COUNT                25
+#define REF_COLUMN                    29
+#define KEYWORD_SLOTS                 2
+
+#define COLOR(foreground, background) (((foreground) << 4) | (background))
+#define COLOR_BLACK                   0
+#define COLOR_GRAY                    1
+#define COLOR_DARK_BLUE               2
+#define COLOR_GREEN                   3
+#define COLOR_PURPLE                  4
+#define COLOR_BROWN                   5
+#define COLOR_ORANGE                  6
+#define COLOR_LIGHT_BLUE              7
+#define COLOR_LIGHT_GREY              9
+#define COLOR_BLUE                    10
+#define COLOR_LIGHT_GREEN             11
+#define COLOR_LIGHT_PURPLE            12
+#define COLOR_RED                     13
+#define COLOR_YELLOW                  14
+#define COLOR_WHITE                   15
+
+#define TEXT_COLOR                    COLOR(COLOR_LIGHT_GREY, COLOR_DARK_BLUE)
+#define HEADER_COLOR                  COLOR(COLOR_DARK_BLUE, COLOR_LIGHT_GREY)
+#define HIGHLIGHT_COLOR               COLOR(COLOR_DARK_BLUE, COLOR_LIGHT_GREY)
+#define KEYWORD_COLOR                 COLOR(COLOR_ORANGE, COLOR_DARK_BLUE)
+#define KEYWORD_HIGHLIGHT_COLOR       COLOR(COLOR_DARK_BLUE, COLOR_ORANGE)
 
 // types
 typedef struct {
@@ -74,7 +97,7 @@ void title(const char* name) {
     uint16_t len = strlen(name);
 
     home();
-    color(0x01);
+    color(HEADER_COLOR);
     putc(' ');
     putc(' ');
     puts(name);
@@ -83,13 +106,13 @@ void title(const char* name) {
         putc(' ');
     }
 
-    color(0x10);
+    color(TEXT_COLOR);
 }
 
 void draw_document_footer(void) {
     uint16_t len = strlen(current_pack->copyrights);
     at(0, TEXT_HEIGHT - 1);
-    color(0x01);
+    color(HEADER_COLOR);
 
     putc(' ');
     putc(' ');
@@ -104,7 +127,7 @@ void draw_document_footer(void) {
     putc('/');
     puti(document_page_count);
 
-    color(0x10);
+    color(TEXT_COLOR);
 }
 
 void draw_document_page(void) {
@@ -112,7 +135,7 @@ void draw_document_page(void) {
 
     clear();
     title(current_pack->start_doc[all_doc_links[current_link_index].index].title);
-    color(0x10);
+    color(TEXT_COLOR);
     at(0, 1);
     ptr0 = document_page_start[document_page];
 
@@ -184,7 +207,7 @@ void document(void) {
 }
 
 void reference(uint16_t ref_index) {
-    color(0x10);
+    color(TEXT_COLOR);
     clear();
     title(current_keywords[ref_index].name);
     at(0, 2);
@@ -222,7 +245,7 @@ void draw_keyword(uint16_t index, bool highlight) {
     uint8_t x = (index / REF_COLUMN) * 20;
     uint8_t y = 1 + (index % REF_COLUMN);
 
-    color(highlight ? 0x01 : 0x10);
+    color(highlight ? KEYWORD_HIGHLIGHT_COLOR : KEYWORD_COLOR);
     at(x, y);
     puts(current_keywords[index].name);
 }
@@ -234,7 +257,7 @@ uint16_t keyword_select(uint16_t current, uint16_t next) {
 }
 
 void draw_references(void) {
-    color(0x10);
+    color(TEXT_COLOR);
     clear();
     title(current_keyword_title);
 
@@ -297,11 +320,11 @@ void references(void) {
 }
 
 void draw_menu(void) {
-    color(0x10);
+    color(TEXT_COLOR);
     clear();
     title("Foenix Documentation");
     at(0, 2);
-    color(0x10);
+    color(TEXT_COLOR);
 
     document_count = 0;
     for (index0 = FLASH_SECTOR_START;
